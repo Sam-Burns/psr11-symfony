@@ -12,12 +12,9 @@ class ServiceContainer implements ContainerInterface
     /** @var SymfonyServiceContainer */
     private $symfonyServiceContainer;
 
-    /**
-     * @param SymfonyServiceContainer $symfonyServiceContainer
-     */
-    public function __construct(SymfonyServiceContainer $symfonyServiceContainer = null)
+    public function __construct()
     {
-        $this->symfonyServiceContainer = $symfonyServiceContainer ?: new SymfonyServiceContainer();
+        $this->symfonyServiceContainer = new SymfonyServiceContainer();
     }
 
     /**
@@ -75,5 +72,10 @@ class ServiceContainer implements ContainerInterface
             throw NotFoundException::constructWithThingNotFound($serviceId);
         }
         return $this->symfonyServiceContainer->get($serviceId);
+    }
+
+    public function reset()
+    {
+        $this->symfonyServiceContainer = new SymfonyServiceContainer();
     }
 }
