@@ -1,0 +1,9 @@
+{
+    "name": "samburns/psr11-symfony",
+
+    "version": "0.1.0",
+
+    "require": {
+        "symfony/dependency-injection": "2.7.1"
+    }
+}
