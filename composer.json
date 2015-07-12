@@ -3,6 +3,8 @@
 
     "version": "0.1.0",
 
+    "license": "MIT",
+
     "require": {
         "symfony/dependency-injection": "2.7.1"
     }
