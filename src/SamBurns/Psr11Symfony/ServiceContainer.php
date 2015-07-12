@@ -1,7 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dev
- * Date: 12/07/15
- * Time: 09:23
- */
+namespace SamBurns\Psr11Symfony;
+
+use Psr\Container\ContainerInterface;
+
+class ServiceContainer implements ContainerInterface
+{
+    /**
+     * @param string $serviceId
+     * @return bool
+     */
+    public function has($serviceId)
+    {
+        return false;
+    }
+
+    /**
+     * @param string $serviceId
+     * @return mixed
+     */
+    public function get($serviceId)
+    {
+        return new \stdClass;
+    }
+}
