@@ -5,7 +5,7 @@ use Psr\Container\ContainerInterface;
 use SamBurns\Psr11Symfony\Exception\NotFoundException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyServiceContainer;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class ServiceContainer implements ContainerInterface
 {
@@ -25,13 +25,33 @@ class ServiceContainer implements ContainerInterface
      */
     public function addConfigFilesFromFolder($pathToFolder)
     {
-        $dirname = null;
-        $filename = null;
+        $filenames = $this->getConfigFilenames($pathToFolder);
 
-        $loader = new PhpFileLoader($this->symfonyServiceContainer, new FileLocator($dirname));
+        $loader = new YamlFileLoader($this->symfonyServiceContainer, new FileLocator($pathToFolder));
 
+        foreach ($filenames as $filename) {
+            $loader->load($filename);
+        }
+    }
 
-        $loader->load($filename);
+    /**
+     * @param string $pathToFolder
+     * @return string[]
+     */
+    private function getConfigFilenames($pathToFolder)
+    {
+        $filesInFolder = array();
+
+        $lsResults = scandir($pathToFolder);
+
+        foreach ($lsResults as $lsResult) {
+            $fullPath = $pathToFolder . $lsResult;
+            if (is_file($fullPath)) {
+                $filesInFolder[] = $lsResult;
+            }
+        }
+
+        return $filesInFolder;
     }
 
     /**
